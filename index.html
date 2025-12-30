@@ -261,7 +261,57 @@
       box-shadow: 0 30px 60px rgba(0,0,0,0.3);
     }
 
-    @media (max-width: 650px) {
+    /* ===== MENSAGEM FINAL ===== */
+.final-message {
+  margin-top: 180px;
+  padding: 120px 20px;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,0.55));
+  border-radius: 40px;
+}
+
+#psButton {
+  background: none;
+  border: none;
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.6rem;
+  color: #7a2e4a;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity .3s ease, transform .3s ease;
+}
+
+#psButton:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.secret-text {
+  margin-top: 25px;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: #5a2a3a;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity .8s ease, transform .8s ease;
+}
+
+.secret-text.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.closing-text {
+  margin-top: 80px;
+  font-family: 'Dancing Script', cursive;
+  font-size: 2rem;
+  color: #7a2e4a;
+  opacity: 0;
+  animation: fadeIn 2s ease forwards;
+  animation-delay: 1.2s;
+}
+
+@media (max-width: 650px) {
       body { font-size: 0.95rem; }
       .envelope { width: 92%; height: 300px; }
       .letter { padding: 50px 30px; }
@@ -314,6 +364,19 @@
     <h3>Uma música que me lembra você</h3>
     <iframe src="https://www.youtube.com/embed/y1cBhJLNNXU" allowfullscreen></iframe>
   </section>
+
+  <section class="final-message">
+    <button id="psButton">ps:</button>
+
+    <p class="secret-text" id="secretText">
+      se você chegou até aqui, é porque já faz parte de mim.
+    </p>
+
+    <div class="closing-text">
+      <p>Esse site não é só uma carta.</p>
+      <p>É um pedaço do que eu sinto por você.</p>
+    </div>
+  </section>
 </main>
 
 <audio id="paperSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_8b16c67a39.mp3"></audio>
@@ -363,6 +426,15 @@
     p.style.animationDuration = 10 + Math.random() * 10 + 's';
     particles.appendChild(p);
   }
+
+  const psButton = document.getElementById('psButton');
+  const secretText = document.getElementById('secretText');
+
+  psButton.addEventListener('click', () => {
+    secretText.classList.add('show');
+    psButton.style.pointerEvents = 'none';
+    psButton.style.opacity = '0.3';
+  });
 </script>
 
 </body>
