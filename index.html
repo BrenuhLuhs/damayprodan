@@ -1,441 +1,246 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Com amor</title>
+  <meta charset="UTF-8">
+  <title>Para você, Hyan 💜</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Poppins:wght@300;400;500&family=Dancing+Script:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    :root {
+      --roxo-claro: #f3eaff;
+      --roxo-medio: #9b6bff;
+      --roxo-escuro: #2a0d4e;
+      --texto: #2b2b2b;
+      --card: #ffffffd9;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(180deg, #f8cdda, #f5a6c6);
-      color: #4a2c3a;
-      overflow-x: hidden;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(180deg, #f7f0ff, #e9ddff);
+      color: var(--texto);
     }
 
-    /* VINHETA ROSA */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 999;
-      background: radial-gradient(circle at center, rgba(255,255,255,0) 55%, rgba(214, 51, 108, 0.18) 100%);
-    }
-
-    /* PARTÍCULAS */
-    .particles {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .particle {
-      position: absolute;
-      font-size: 18px;
-      opacity: 0.6;
-      animation: fall linear infinite;
-    }
-
-    @keyframes fall {
-      from { transform: translateY(-10vh); }
-      to { transform: translateY(110vh); }
-    }
-
-    /* CAPA */
-    .cover {
-      position: fixed;
-      inset: 0;
-      background: url('78e7b822a8b889d47e050e44572d53b9.jpg') center/cover no-repeat;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10;
-    }
-
-    .overlay {
-      backdrop-filter: blur(6px);
-      background: rgba(255, 200, 220, 0.25);
-      border: 2px solid rgba(255,255,255,0.4);
-      padding: 50px 40px;
-      border-radius: 30px;
-      text-align: center;
-      color: #fff;
-      max-width: 420px;
-      box-shadow: 0 30px 60px rgba(0,0,0,0.35);
-      animation: float 4s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-
-    .overlay h1 {
-      font-family: 'Dancing Script', cursive;
-      font-size: 2.6rem;
-      margin-bottom: 25px;
-    }
-
-    .overlay input {
-      padding: 14px;
-      border-radius: 14px;
-      border: none;
-      width: 100%;
-      font-size: 1rem;
-      margin-bottom: 12px;
-      text-align: center;
-    }
-
-    .hint { font-style: italic; }
-    .error { display: none; color: #ffd1dc; margin-top: 10px; }
-
-    main {
-      opacity: 0;
-      transition: opacity 1.8s ease;
-      padding: 100px 20px 160px;
-      max-width: 1000px;
-      margin: auto;
-      position: relative;
-      z-index: 2;
-    }
-
-    main.visible { opacity: 1; }
-
-    /* INTRO */
-    .intro {
-      text-align: center;
-      margin-bottom: 100px;
-    }
-
-    .intro h2 {
-      font-family: 'Dancing Script', cursive;
-      font-size: 3rem;
-      margin-bottom: 18px;
-    }
-
-    /* ENVELOPE */
-    .letter-wrapper {
-      display: flex;
-      justify-content: center;
-      margin: 120px 0;
-    }
-
-    .envelope {
-      position: relative;
-      width: 520px;
-      height: 360px;
-      background: #fdf1f6;
-      border-radius: 18px;
-      box-shadow: 0 40px 80px rgba(0,0,0,0.25);
-      cursor: pointer;
-      overflow: hidden;
-      animation: breathe 4s ease-in-out infinite;
-    }
-
-    @keyframes breathe {
-      0%,100% { transform: scale(1); }
-      50% { transform: scale(1.015); }
-    }
-
-    .envelope.open { animation: none; }
-
-    .flap {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, #f6c1d3, #fdf1f6);
-      clip-path: polygon(0 0, 100% 0, 50% 55%);
-      transform-origin: top;
-      transition: transform 1.4s ease;
-      z-index: 3;
-    }
-
-    .envelope.open .flap { transform: rotateX(180deg); }
-
-    .seal {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 90px;
-      height: 90px;
-      background: radial-gradient(circle at top, #ff8fab, #c9184a);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Dancing Script', cursive;
-      font-size: 1.4rem;
-      color: #fff;
-      z-index: 4;
-    }
-
-    /* CARTA */
-    .letter {
-      filter: blur(6px);
-      transform: translateY(80px);
+    section {
       max-width: 900px;
-      margin: 0 auto 140px;
-      background: #fff8fb url('https://www.transparenttextures.com/patterns/paper-fibers.png');
-      padding: 80px 70px;
-      border-radius: 22px;
-      box-shadow: inset 0 0 0 2px #f3c1d1, 0 30px 80px rgba(0,0,0,0.25);
+      margin: auto;
+      padding: 90px 20px;
+    }
+
+    h1, h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 1.08rem;
+      text-align: center;
+    }
+
+    h1 { font-size: 2.7rem; }
+    h2 { font-size: 2rem; margin-bottom: 35px; }
+
+    p {
+      font-size: 1.05rem;
       line-height: 1.9;
-      display: none;
+      margin-bottom: 20px;
+      white-space: pre-line;
     }
 
-    .letter.show {
-      display: block;
-      animation: reveal 1.6s ease forwards;
-    }
-
-    @keyframes reveal {
-      from { opacity: 0; transform: translateY(80px); filter: blur(6px); }
-      to { opacity: 1; transform: translateY(0); filter: blur(0); }
-    }
-
-    .letter-header {
+    .hero {
+      min-height: 100vh;
       display: flex;
-      justify-content: space-between;
-      margin-bottom: 40px;
-      font-family: 'Dancing Script', cursive;
-      font-size: 1.8rem;
-      color: #7a2e4a;
-      opacity: 0;
-      animation: fadeIn 2s ease forwards;
-      animation-delay: 1.6s;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
     }
 
-    .letter-header span {
-      overflow: hidden;
-      white-space: nowrap;
-      width: 0;
-      animation: write 2.2s steps(18, end) forwards;
+    .hero span {
+      display: block;
+      margin-top: 15px;
+      font-size: 1.2rem;
+      opacity: 0.85;
     }
 
-    .letter-header span:last-child {
-      animation-delay: 2.4s;
+    .card {
+      background: var(--card);
+      backdrop-filter: blur(12px);
+      border-radius: 30px;
+      padding: 45px;
+      box-shadow: 0 25px 70px rgba(75, 0, 130, 0.15);
     }
 
-    @keyframes write {
-      to { width: 100%; }
+    .highlight {
+      color: var(--roxo-medio);
+      font-weight: 500;
     }
+
+    .video-block { margin-top: 65px; }
+
+    video {
+      width: 100%;
+      margin-top: 25px;
+      border-radius: 26px;
+      box-shadow: 0 20px 55px rgba(42, 13, 78, 0.35);
+    }
+
+    .music {
+      background: linear-gradient(180deg, #3a136f, #1d063a);
+      color: #fff;
+      border-radius: 45px;
+      padding: 90px 25px;
+    }
+
+    .final { text-align: center; }
 
     .signature {
-      margin-top: 50px;
-      text-align: right;
-      font-family: 'Dancing Script', cursive;
-      font-size: 2rem;
-      color: #7a2e4a;
-      opacity: 0;
-      animation: fadeIn 2s ease forwards;
-      animation-delay: 5s;
+      margin-top: 35px;
+      font-style: italic;
     }
 
-    @keyframes fadeIn {
-      to { opacity: 1; }
+    .secret {
+      margin-top: 45px;
+      font-size: 0.85rem;
+      opacity: 0.55;
+      cursor: pointer;
     }
 
-    .letter p { margin-bottom: 26px; }
-
-    /* MÚSICA */
-    .music { text-align: center; margin-top: 160px; }
-    .music h3 { font-family: 'Dancing Script', cursive; font-size: 2.2rem; margin-bottom: 25px; }
-
-    iframe {
-      width: 100%;
-      max-width: 900px;
-      height: 420px;
-      border-radius: 24px;
-      box-shadow: 0 30px 60px rgba(0,0,0,0.3);
-    }
-
-    /* ===== MENSAGEM FINAL ===== */
-.final-message {
-  margin-top: 180px;
-  padding: 120px 20px;
-  text-align: center;
-  background: linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,0.55));
-  border-radius: 40px;
-}
-
-#psButton {
-  background: none;
-  border: none;
-  font-family: 'Dancing Script', cursive;
-  font-size: 1.6rem;
-  color: #7a2e4a;
-  cursor: pointer;
-  opacity: 0.6;
-  transition: opacity .3s ease, transform .3s ease;
-}
-
-#psButton:hover {
-  opacity: 1;
-  transform: scale(1.05);
-}
-
-.secret-text {
-  margin-top: 25px;
-  font-family: 'Playfair Display', serif;
-  font-size: 1.1rem;
-  color: #5a2a3a;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity .8s ease, transform .8s ease;
-}
-
-.secret-text.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.closing-text {
-  margin-top: 80px;
-  font-family: 'Dancing Script', cursive;
-  font-size: 2rem;
-  color: #7a2e4a;
-  opacity: 0;
-  animation: fadeIn 2s ease forwards;
-  animation-delay: 1.2s;
-}
-
-@media (max-width: 650px) {
-      body { font-size: 0.95rem; }
-      .envelope { width: 92%; height: 300px; }
-      .letter { padding: 50px 30px; }
-      iframe { height: 230px; }
+    .secret-message {
+      display: none;
+      margin-top: 15px;
+      font-style: italic;
+      color: var(--roxo-medio);
     }
   </style>
 </head>
+
 <body>
 
-<div class="particles" id="particles"></div>
-
-<section class="cover" id="cover">
-  <div class="overlay">
-    <h1>Antes de entrar…</h1>
-    <input type="password" id="password" placeholder="Digite a senha" />
-    <div class="hint">KKKKK tu vai saber rapidinho eu sempre te chamo por essa palavra</div>
-    <div class="error" id="error">sinceramente como tu errou isso?</div>
+<section class="hero">
+  <div>
+    <h1>Isso não é só um site.</h1>
+    <span>É um pedaço do que eu sinto por você, Hyan.</span>
   </div>
 </section>
 
-<main id="main">
-  <section class="intro">
-    <h2>Pra você, meu amor</h2>
-    <p>Tem coisas que não cabem em mensagens. Então eu fiz um lugar só nosso.</p>
-  </section>
+<section>
+  <div class="card">
 
-  <div class="letter-wrapper">
-    <div class="envelope" id="openLetter">
-      <div class="flap"></div>
-      <div class="seal">Abrir</div>
-    </div>
-  </div>
-
-  <div class="letter" id="letter">
-    <div class="letter-header">
-      <span>DE: Dan</span>
-      <span>PARA: May</span>
-    </div>
-
-    <p>tô feliz demais que a gente tá passando esse final de ano juntos... e pode ter certeza que vai ser o primeiro de muitos, viu? Não aceito menos que isso KKKKK Esse ano só foi bom de verdade por sua causa ter te conhecido foi a melhor coisa que me aconteceu em 2025 e eu direto me pergunto como seria minha vida se vc não tivesse falado cmg naquele dia. Vc é meu melhor presente princesa.</p>
-    <p>Se eu fosse responder msm o que vc tem que me fez gostar de vc eu ia ficar noites acordado falando e não ia terminar vc é simplesmente incrível, a garota mais linda que já vi por dentro e por fora. Cada risada sua ilumina meu dia e o jeito que vc fala, ri e até qnd tá brava ou teimosa e é muito teimosa viu KKKKKK, tudo em vc tem algo especial VC tem um coração enorme e é o tipo de pessoa que a gente conhece uma vez e não esquece nunca mais. E eu? Sou só um cara normal que deu a sorte grande de ter vc.</p>
-    <p>Desde o dia que te conheci minha vida mudou de um jeito que eu não achava possível, vc trouxe paz e uma luz diferente, parece que tudo ganhou mais vida e cor. Vc me faz a pessoa mais feliz do mundo com uma simples mensagem e eu sou apaixonado por cada detalhe seu: seu sorriso, seus olhinhos que eu amo tanto, sua voz, seu cabelo lindo de maravilhoso, literalmente tudo em vc me encanta. e qnd vc diz que é feia eu me recuso a escutar, pq vc é a garota mais perfeita que eu já vi na vida.</p>
-    <p>O que eu sinto por vc não cabe em palavras, ultrapassa a razão. vc me acalma qnd tudo tá dando errado e me desperta partes que eu nem sabia que existiam Já que vc nunca perguntou, vou responder msm assim: sim meu amor, vc é minha prioridade. Eu nunca vou te trocar. Eu me importo com cada sentimento seu e vc é a única pessoa que eu respondo qnd tô mal. Vc pode desabafar cmg sempre pq eu nunca vou te julgar. Eu não me apaixonei por aparência nem por corpo, me apaixonei pelo jeito que vc me trata, pelo seu humor e por como vc demonstra que gosta de mim.</p>
-    <p>Não importa qnts brigas a gente tenha ou qnts problemas apareçam, vamos enfrentar juntos. Eu nunca vou desistir de vc pq é com vc que eu me sinto feliz e amado. Quero dividir meus melhores momentos contigo e cumprir todas as promessas que eu te fiz, mostrando com atitudes que vc tá segura cmg. Eu vou te amar independente de tudo, msm se vc estiver longe, feia que eu acho impossível né ou com raiva eu sempre vou cuidar de vc pra sempre. Te amo muito minha bb, vc é meu mundo todinho e o amor da minha vida. Te amo do fundo da minha alma, minha princesa! ❤️</p>
-
-    <div class="signature">Dan ❤️</div>
-  </div>
-
-  <section class="music">
-    <h3>Uma música que me lembra você</h3>
-    <iframe src="https://www.youtube.com/embed/y1cBhJLNNXU" allowfullscreen></iframe>
-  </section>
-
-  <section class="final-message">
-    <button id="psButton">ps:</button>
-
-    <p class="secret-text" id="secretText">
-      se você chegou até aqui, é porque já faz parte de mim.
+    <p>
+      Meu amor,
     </p>
 
-    <div class="closing-text">
-      <p>Esse site não é só uma carta.</p>
-      <p>É um pedaço do que eu sinto por você.</p>
-    </div>
-  </section>
-</main>
+    <p>
+      Eu estou completamente <span class="highlight">apaixonada por você</span>, de um jeito que eu nunca imaginei que ficaria esse ano de verdade. Espero que cada momento que passamos juntos seja tão especial quanto é para mim, porque sinceramente amo passar cada minuto do meu tempo do seu lado. Porque querendo ou não, você me faz rir quando eu tô triste ou até mesmo com dor, você enche meu coração de <span class="highlight">alegria</span> e muito <span class="highlight">amor</span>. E eu adoro estar pertinho de você, sentindo seu carinho, seus beijinhos e tudo que quero sentir vindo de você.
+    </p>
 
-<audio id="paperSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_8b16c67a39.mp3"></audio>
+    <p>
+      Você é a minha <span class="highlight">pessoa favorita</span>, pois você sabia que virou ela tão rápido assim? Ainda bem que você decidiu vir me amar e eu agradeço por eu ter tido coragem de ter falado pra você falar aquilo com a sua melhor amiga (Mari Mari). Se não, ficaria morrendo de <span class="highlight">ciúmes</span> até hoje, porque sinceramente o ódio que eu tinha de vocês dois juntos dividindo metadinha, skins e tudo mais, ou até mesmo quando você falava que ia ter que ir call com ela ou mesmo pensar que passavam horas em call ou dela te chamar de meu bem, amor ou vida, isso me deixava louca.
+    </p>
 
-<script>
-  const input = document.getElementById('password');
-  const error = document.getElementById('error');
-  const cover = document.getElementById('cover');
-  const main = document.getElementById('main');
+    <p>
+      Eu morria de ciúmes de verdade, sério, tinha um ciúmes enorme que dava vontade de te matar, porque eu que queria tá no lugar dela. E não é que eu consegui um lugar melhor, ainda que ela nunca vai ter? Mas você acredita que foi com esse ciúmes que eu percebi que eu gostava mesmo de você e que eu tava começando a me <span class="highlight">apaixonar</span> por você de verdade?
+    </p>
 
-  input.addEventListener('keydown', e => {
-    if (e.key === 'Enter') {
-      if (input.value.toLowerCase() === 'cabeçuda') {
-        cover.style.opacity = '0';
-        setTimeout(() => {
-          cover.style.display = 'none';
-          main.classList.add('visible');
-        }, 1400);
-      } else {
-        error.style.display = 'block';
-      }
-    }
-  });
+    <p>
+      Posso nunca ter te tocado ou ter te sentido você pessoalmente, mas eu me apaixonei pelo seu jeito e pela sua forma que me faz feliz com tão pouco, só de você respirar já me faz feliz.
+    </p>
 
-  const envelope = document.getElementById('openLetter');
-  const letter = document.getElementById('letter');
-  const sound = document.getElementById('paperSound');
+    <p>
+      Você sabe que em Frozen falam que só com um ato de <span class="highlight">amor verdadeiro</span> pode aquecer um coração gelado, e acredita que você aqueceu o meu coração com seu amor. Já que estou citando Frozen, já posso falar que você é muito o <span class="highlight">Kristoff</span> da minha Anna, como também é muito o <span class="highlight">Meliodas</span> da minha Elizabeth.
+    </p>
 
-  envelope.addEventListener('click', () => {
-    envelope.classList.add('open');
-    sound.play();
-    setTimeout(() => {
-      letter.classList.add('show');
-      letter.scrollIntoView({ behavior: 'smooth' });
-    }, 1600);
-  });
+    <p>
+      Mas enfim, passaria horas falando quais casais somos, porque sinceramente tem muitos para falar. Você com certeza é o <span class="highlight">melhor namorado do universo</span>, e eu sou a pessoa mais sortuda do mundo por ter você na minha vida.
+    </p>
 
-  // partículas
-  const icons = ['❤️','✨','🌸'];
-  const particles = document.getElementById('particles');
+    <p>
+      Te amo mais do que palavras podem expressar de verdade, mais do que qualquer coisa no mundo. Espero muito ser uma boa companhia e uma boa namorada! Eu te amo mais que tudo nesse mundo, meu amor.
+    </p>
 
-  for (let i = 0; i < 25; i++) {
-    const p = document.createElement('div');
-    p.className = 'particle';
-    p.textContent = icons[Math.floor(Math.random() * icons.length)];
-    p.style.left = Math.random() * 100 + 'vw';
-    p.style.animationDuration = 10 + Math.random() * 10 + 's';
-    particles.appendChild(p);
-  }
+    <p>
+      Espero passar mais um <span class="highlight">ano novo juntinho</span> com você ou até mesmo passar um ano inteirinho junto com você do meu ladinho, tocando em você finalmente. Af, aliás, dia <span class="highlight">29/12/2025</span> você me respondeu quando eu perguntei “mas o que a eu tenho que te fez gostar de mim?”
+    </p>
 
-  const psButton = document.getElementById('psButton');
-  const secretText = document.getElementById('secretText');
+    <p>
+      E pra falar a verdade, você me respondeu coisas que eu nunca imaginei que iriam falar pra mim de verdade. Eu fiquei a pessoa mais feliz nesse dia, você não tem noção, fiquei com meu coração quietinha e claro que chorei um pouquinho também, porque quem não choraria?
+    </p>
 
-  psButton.addEventListener('click', () => {
-    secretText.classList.add('show');
-    psButton.style.pointerEvents = 'none';
-    psButton.style.opacity = '0.3';
-  });
-</script>
+    <p>
+      Outra coisa que eu queria falar é que eu <span class="highlight">confio em você 100%</span>. Confio com todas as minhas forças e espero que você confie em mim também. Meu medo agora tá sendo <span class="highlight">perder você</span>. Não tô imaginando minha vida sem meu namorado agora.
+    </p>
+
+    <p>
+      Espero que goste desse texto que fiz com todo o meu amor, toda a minha paixão e todo o meu coração nele. Mas o principal que eu quero que você saiba é que eu te amo <span class="highlight">muitooo</span> muito mesmo <span class="highlight">Hyan</span>.
+    </p>
+
+    <p>
+      com todo amor da sua princesa!
+    </p>
+
+  </div>
+</section>
+<section>
+  <h2>Quando eu vejo a gente em outras histórias</h2>
+
+  <div class="video-block">
+    <p>
+E também quero falar dos <span class="highlight">doramas</span>, os que eu vejo a gente... E também quero ver com você né, porque sim, você vai ver todos eles comigo. Então, vamos começar com os meus queridos <span class="highlight">Zhang Lurang e Su Zaizai</span>.
+    </p>
+    <video src="vídeo 1.mov" controls></video>
+  </div>
+
+  <div class="video-block">
+    <p>
+Outro que eu também vejo é o <span class="highlight">Hidden Love</span>, que são a <span class="highlight">Sang Zhi</span> e o <span class="highlight">Duan Jiaxu</span>.
+    </p>
+    <video src="vídeo 2.mov" controls></video>
+  </div>
+
+  <div class="video-block">
+    <p>
+E, por último, os meus favoritos de todos os tempos: <span class="highlight">Wei Zhi</span> e <span class="highlight">Shan Chong</span>, que também vejo muito a gente neles.
+    </p>
+    <video src="vídeo 3.mov" controls></video>
+  </div>
+</section>
+
+<section class="music">
+  <h2>Músicas que eu dedico a você</h2>
+
+  <p style="text-align:center;">
+Claro que tem muitos outros, mas esses três são os principais para mim, os que eu mais amo e que quero dedicar a você.
+  </p>
+
+  <div style="max-width:560px;margin:40px auto 0;">
+    <iframe width="100%" height="315" src="https://www.youtube.com/embed/BUkLAdb6D9s" frameborder="0" allowfullscreen style="border-radius:18px;"></iframe>
+  </div>
+
+  <div style="max-width:560px;margin:40px auto 0;">
+    <iframe width="100%" height="315" src="https://www.youtube.com/embed/KXwftNuuVJo" frameborder="0" allowfullscreen style="border-radius:18px;"></iframe>
+  </div>
+</section>
+
+<section class="final">
+  <p>
+Espero que tenha gostado disso, meu amor. <span class="highlight">Feliz Ano Novo</span>! Que passemos mais anos novos juntinhos e juntos de verdade.
+  </p>
+
+  <div class="signature">
+    <p>De: <span class="highlight">Manuela</span></p>
+    <p>Para: <span class="highlight">Hyan</span></p>
+  </div>
+
+  <div class="secret" onclick="document.querySelector('.secret-message').style.display='block'">
+    ps:
+  </div>
+
+  <div class="secret-message">
+    se você chegou até aqui, é porque já faz parte de mim.
+  </div>
+</section>
 
 </body>
 </html>
