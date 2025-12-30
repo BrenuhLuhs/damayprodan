@@ -168,6 +168,29 @@ p{
   10%{opacity:1;}
   to{transform:translateY(115vh) translateX(var(--drift));opacity:0;}
 }
+/* particles (background dots) */
+.particle{
+  position:fixed;
+  top:-10vh;
+  width:8px;
+  height:8px;
+  background:rgba(155,107,255,0.12);
+  border-radius:50%;
+  pointer-events:none;
+  z-index:0;
+  animation:particle-fall linear forwards;
+}
+@keyframes particle-fall{
+  from{transform:translateY(0);opacity:1}
+  to{transform:translateY(120vh);opacity:0}
+}
+
+/* reveal animation for sections used by IntersectionObserver */
+section{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}
+section.show{opacity:1;transform:translateY(0)}
+
+/* hide secret message by default */
+.secret-message{display:none}
 </style>
 </head>
 
@@ -184,7 +207,7 @@ p{
 
   <div class="letter-scene">
     <div>
-      <div class="envelope" onclick="openLetter(this)">
+      <div class="envelope" role="button" tabindex="0" aria-pressed="false" onclick="openLetter(this)">
         <div class="envelope-back"></div>
         <div class="envelope-flap"></div>
         <div class="seal">abrir</div>
@@ -219,21 +242,30 @@ Te amo mais do que palavras podem expressar de verdade.
     <p>
       E também quero falar dos <span class="highlight">doramas</span>, os que eu vejo a gente... E também quero ver com você né, porque sim, você vai ver todos eles comigo. Então, vamos começar com os meus queridos <span class="highlight">Zhang Lurang e Su Zaizai</span>.
     </p>
-    <video src="vídeo 1.mov" controls></video>
+    <video controls>
+      <source src="video1.mp4" type="video/mp4">
+      Seu navegador não suporta o elemento de vídeo.
+    </video>
   </div>
 
   <div class="video-block">
     <p>
       Outro que eu também vejo é o <span class="highlight">Hidden Love</span>, que são a <span class="highlight">Sang Zhi</span> e o <span class="highlight">Duan Jiaxu</span>.
     </p>
-    <video src="vídeo 2.mov" controls></video>
+    <video controls>
+      <source src="video2.mp4" type="video/mp4">
+      Seu navegador não suporta o elemento de vídeo.
+    </video>
   </div>
 
   <div class="video-block">
     <p>
       E, por último, os meus favoritos de todos os tempos: <span class="highlight">Wei Zhi</span> e <span class="highlight">Shan Chong</span>, que também vejo muito a gente neles.
     </p>
-    <video src="vídeo 3.mov" controls></video>
+    <video controls>
+      <source src="video3.mp4" type="video/mp4">
+      Seu navegador não suporta o elemento de vídeo.
+    </video>
   </div>
 </section>
 
@@ -263,7 +295,7 @@ Te amo mais do que palavras podem expressar de verdade.
     <p>Para: <span class="highlight">Hyan</span></p>
   </div>
 
-  <div class="secret" onclick="document.querySelector('.secret-message').style.display='block'">
+  <div class="secret" role="button" tabindex="0" aria-expanded="false">
     ps:
   </div>
 
@@ -292,25 +324,50 @@ Te amo mais do que palavras podem expressar de verdade.
     particle.style.opacity = Math.random() * 0.6;
     document.body.appendChild(particle);
   }
-</script>
 
-  <script>
-function openLetter(el){
-  el.classList.add('open');
-}
+  function openLetter(el){
+    el.classList.add('open');
+    el.setAttribute('aria-pressed','true');
+  }
 
-function createHeart(){
-  const heart=document.createElement('div');
-  heart.className='heart';
-  heart.innerText='💜';
-  heart.style.left=Math.random()*100+'vw';
-  heart.style.fontSize=(14+Math.random()*14)+'px';
-  heart.style.setProperty('--drift',(Math.random()*60-30)+'px');
-  heart.style.animationDuration=(10+Math.random()*8)+'s';
-  document.body.appendChild(heart);
-  setTimeout(()=>heart.remove(),18000);
-}
-setInterval(createHeart,700);
+  function createHeart(){
+    const heart=document.createElement('div');
+    heart.className='heart';
+    heart.innerText='💜';
+    heart.style.left=Math.random()*100+'vw';
+    heart.style.fontSize=(14+Math.random()*14)+'px';
+    heart.style.setProperty('--drift',(Math.random()*60-30)+'px');
+    heart.style.animationDuration=(10+Math.random()*8)+'s';
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),18000);
+  }
+  setInterval(createHeart,700);
+
+  // keyboard accessibility for envelope and secret
+  document.querySelectorAll('.envelope, .secret').forEach(el=>{
+    el.addEventListener('keydown', e=>{
+      if(e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        if(el.classList.contains('envelope')) openLetter(el);
+        else if(el.classList.contains('secret')){
+          const msg = document.querySelector('.secret-message');
+          const expanded = el.getAttribute('aria-expanded') === 'true';
+          el.setAttribute('aria-expanded', String(!expanded));
+          msg.style.display = expanded ? 'none' : 'block';
+        }
+      }
+    });
+
+    el.addEventListener('click', e=>{
+      if(el.classList.contains('secret')){
+        const msg = document.querySelector('.secret-message');
+        const expanded = el.getAttribute('aria-expanded') === 'true';
+        el.setAttribute('aria-expanded', String(!expanded));
+        msg.style.display = expanded ? 'none' : 'block';
+      }
+    });
+  });
+
 </script>
 
 </body>
